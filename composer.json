@@ -1,0 +1,24 @@
+{
+    "name": "m6web/domain-user-bundle",
+    "description": "User authentication by domain",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adrien Samson",
+            "email": "asamson.externe@m6.fr"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "M6Web\\Bundle\\DomainUserBundle": ""
+        }
+    },
+    "target-dir": "M6Web/Bundle/DomainUserBundle",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+    },
+    "require-dev": {
+        "symfony/symfony": "~2.3"
+    }
+}

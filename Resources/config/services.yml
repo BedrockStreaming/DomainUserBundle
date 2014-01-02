@@ -1,0 +1,32 @@
+services:
+    m6_web_domain_user.user_provider:
+        class: M6Web\Bundle\DomainUserBundle\User\UserProvider
+        arguments: ["@m6_web_domain_user.user_provider.yamlparser", "%m6_web_domain_user.users_dir%"]
+
+    m6_web_domain_user.user_provider.yamlparser:
+        class: Symfony\Component\Yaml\Parser
+
+    m6_web_domain_user.security.authentication_provider:
+        class:  M6Web\Bundle\DomainUserBundle\Security\AuthenticationProvider
+        arguments: ["", "@m6web.firewall.provider"]
+
+    m6_web_domain_user.security.authentication_listener:
+        class:  M6Web\Bundle\DomainUserBundle\Security\FirewallListener
+        arguments:
+            - "@security.context"
+            - "@security.authentication.manager"
+            - "@router.request_context"
+            - "%m6_web_domain_user.default_user%"
+            - "%m6_web_domain_user.router_parameter%"
+
+    m6_web_domain_user.user_access_listener:
+            class: M6Web\Bundle\DomainUserBundle\EventListener\UserAccessListener
+            tags:
+              - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority:-255 }
+            arguments: [@security.context]
+
+    m6_web_domain_user.cache_listener:
+            class: M6Web\Bundle\DomainUserBundle\EventListener\CacheListener
+            tags:
+              - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority:255 }
+            arguments: [@security.context, "%m6_web_domain_user.default_cache%"]
