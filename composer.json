@@ -19,6 +19,7 @@
     "require": {
     },
     "require-dev": {
-        "symfony/symfony": "~2.3"
+        "symfony/symfony": "~2.3",
+        "atoum/atoum": "dev-master"
     }
 }
