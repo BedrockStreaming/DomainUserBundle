@@ -1,4 +1,4 @@
-# DomainUserBundle
+# DomainUserBundle [![Build Status](https://secure.travis-ci.org/M6Web/DomainUserBundle.png?branch=master)](http://travis-ci.org/M6Web/DomainUserBundle)
 
 DomainUserBundle provides user authentication by subdomain.  
 It allows firewalling, cache customization, route filtering and data filtering by subdomain.
