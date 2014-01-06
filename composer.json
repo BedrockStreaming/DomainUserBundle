@@ -17,8 +17,10 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
+        "m6web/firewall-bundle": "0.3.*"
     },
     "require-dev": {
-        "symfony/symfony": "~2.3"
+        "symfony/symfony": "~2.3",
+        "atoum/atoum": "dev-master"
     }
 }

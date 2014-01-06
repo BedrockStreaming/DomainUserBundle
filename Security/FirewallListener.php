@@ -58,9 +58,11 @@ class FirewallListener implements ListenerInterface
         $username = $this->defaultUsername;
         $params   = $request->attributes->get('_route_params');
 
-        if (!empty($params[$this->routerParameter])) {
+        if (isset($params[$this->routerParameter])) {
             $this->requestContext->setParameter($this->routerParameter, $params[$this->routerParameter]);
-            $username = trim($params[$this->routerParameter], '.');
+            if (!empty($params[$this->routerParameter])) {
+                $username = trim($params[$this->routerParameter], '.');
+            }
         }
 
         $token = new Token($username);
