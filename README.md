@@ -83,6 +83,20 @@ entities:
         active: true # Arbitrary flag you can use to filter your entities in your repositories
 ```
 
+Edit your `app/config/security.yml`:
+```yaml
+security:
+    firewalls:
+        secured_area:
+            pattern:            ^/
+            anonymous:          false
+            m6_web_domain_user: true
+
+    providers:
+        m6_web_domain_user:
+            id: m6_web_domain_user.user_provider
+```
+
 ## Tests
 
 ```shell
