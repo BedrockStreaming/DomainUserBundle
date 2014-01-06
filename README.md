@@ -1,9 +1,16 @@
 # DomainUserBundle
 
-DomainUserBundle provides User authentication by subdomain.
+DomainUserBundle provides user authentication by subdomain.  
+It allows firewalling, cache customization, route filtering and data filtering by subdomain.
+
+## Dependency
+
+DomainUserBundle requires [FirewallBundle](https://github.com/m6web/FirewallBundle).
 
 ## Installation
+
 Add this line in your composer.json:
+
 ```json
 {
     "require": {
@@ -13,21 +20,26 @@ Add this line in your composer.json:
 ```
 
 Update your vendors:
+
 ```sh
-$ composer update m6web/redis-mock
+$ composer update m6web/domain-user-bundle
 ```
+
 Add to your `AppKernel.php`:
-```
-    new M6Web\Bundle\DomainUserBundle\M6WebDomainUserBundle(),
-    new M6Web\Bundle\FirewallBundle\M6WebFirewallBundle(),
+
+```php
+new M6Web\Bundle\DomainUserBundle\M6WebDomainUserBundle(),
+new M6Web\Bundle\FirewallBundle\M6WebFirewallBundle(),
 ```
 
 ## Configuration
+
 Modify your routes to add a parameter in your host requirement:
+
 ```yaml
 routes:
     resource: api_routing.yml
-    host:     {client}api.exemple.com
+    host:     {client}api.example.com
     requirements:
         client: ([a-z0-9]+\.)?
     defaults:
@@ -35,6 +47,7 @@ routes:
 ```
 
 Add in your `app/config.yml`:
+
 ```yaml
 m6_web_domain_user:
     default_cache:    300      # Default cache duration
@@ -44,6 +57,7 @@ m6_web_domain_user:
 ```
 
 Add a user `app/config/users/public.yml`:
+
 ```yaml
 firewall:
     user_access: # Configure IP restrictions with FirewallBundle
@@ -77,7 +91,7 @@ $ ./vendor/bin/atoum
 
 ## Credits
 
-Developped by the [Cytron Team](http://cytron.fr/) of [M6 Web](http://tech.m6web.fr/).
+Developped by the [Cytron Team](http://cytron.fr/) of [M6 Web](http://tech.m6web.fr/).  
 Tested with [atoum](http://atoum.org).
 
 ## License
