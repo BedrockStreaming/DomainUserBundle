@@ -3,7 +3,7 @@
 namespace M6Web\Bundle\DomainUserBundle\Tests\Units\User;
 
 use M6Web\Bundle\DomainUserBundle\User\User;
-use M6Web\Bundle\DomainUserBundle\User\UserConfiguration;
+use M6Web\Bundle\DomainUserBundle\User\UserConfiguration as UserConf;
 use mageekguy\atoum\test;
 
 use M6Web\Bundle\DomainUserBundle\User\UserProvider as TestedClass;
@@ -30,10 +30,10 @@ class UserProvider extends test
         $this
             ->object($user = $provider->loadUserByUsername('user1'))
                 ->isInstanceOf('M6Web\Bundle\DomainUserBundle\User\User')
-                ->isEqualTo(new User('user1', $processor->processConfiguration(new UserConfiguration(), [[]])))
+                ->isEqualTo(new User('user1', $processor->processConfiguration(new UserConf(), [[]])))
             ->object($user = $provider->loadUserByUsername('user2'))
                 ->isInstanceOf('M6Web\Bundle\DomainUserBundle\User\User')
-                ->isEqualTo(new User('user2', $processor->processConfiguration(new UserConfiguration(), [['cache' => ['default' => 300]]])))
+                ->isEqualTo(new User('user2', $processor->processConfiguration(new UserConf(), [['cache' => ['default' => 300], 'entities' => ['active' => true, 'myflag' => true]]])))
             ->exception(function () use ($provider) { $provider->loadUserByUsername('unknownuser'); })
                 ->isInstanceOf('Symfony\Component\Security\Core\Exception\UsernameNotFoundException');
     }
