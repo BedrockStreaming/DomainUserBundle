@@ -39,8 +39,10 @@ class UserConfiguration extends test
                         )
                     ),
                     'entities' => array(
-                        'active' => true,
-                        'myflag' => 3
+                        'article' => array(
+                            'active' => true,
+                            'myflag' => 3,
+                        ),
                     ),
                 ));
     }

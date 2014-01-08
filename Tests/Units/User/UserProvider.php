@@ -33,7 +33,7 @@ class UserProvider extends test
                 ->isEqualTo(new User('user1', $processor->processConfiguration(new UserConf(), [[]])))
             ->object($user = $provider->loadUserByUsername('user2'))
                 ->isInstanceOf('M6Web\Bundle\DomainUserBundle\User\User')
-                ->isEqualTo(new User('user2', $processor->processConfiguration(new UserConf(), [['cache' => ['default' => 300], 'entities' => ['active' => true, 'myflag' => true]]])))
+                ->isEqualTo(new User('user2', $processor->processConfiguration(new UserConf(), [['cache' => ['default' => 300], 'entities' => ['article' => ['active' => true, 'myflag' => true]]]])))
             ->exception(function () use ($provider) { $provider->loadUserByUsername('unknownuser'); })
                 ->isInstanceOf('Symfony\Component\Security\Core\Exception\UsernameNotFoundException');
     }
