@@ -32,12 +32,7 @@ class UserConfiguration implements ConfigurationInterface
                 ->end()
 
                 ->arrayNode('entities')
-                    ->prototype('array')
-                        ->children()
-                            ->booleanNode('active')->end()
-                            ->booleanNode('publication')->end()
-                        ->end()
-                    ->end()
+                    ->prototype('scalar')->end()
                 ->end()
 
                 ->arrayNode('firewall')

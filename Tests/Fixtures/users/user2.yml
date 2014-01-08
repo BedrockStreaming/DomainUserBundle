@@ -1,2 +1,5 @@
 cache:
     default: 300
+entities:
+    active: true
+    myflag: 3
