@@ -44,5 +44,33 @@ class UserConfiguration extends test
                     ),
                 ));
     }
+
+    public function testDefaultProcessedConfig()
+    {
+        $yamlParser = new Parser();
+        $userConfig = $yamlParser->parse(file_get_contents(__DIR__.'/../../Fixtures/users/user1.yml'));
+        $processor = new Processor();
+
+        $this->assert
+            ->array($processor->processConfiguration(new TestedClass(), [$userConfig]))
+                ->isEqualTo(array(
+                    'cache' => array(
+                        'default' => 300,
+                        'routes' => array(),
+                    ),
+                    'firewall' => array(
+                        'user_access' => array(
+                            'default_state' => true,
+                            'lists' => array(),
+                        ),
+                        'allow' => array(
+                            'default' => false,
+                            'methods' => array(),
+                            'resources' => array(),
+                            'routes' => array(),
+                        )
+                    ),
+                    'entities' => array(),
+                ));
+    }
 }
- 
