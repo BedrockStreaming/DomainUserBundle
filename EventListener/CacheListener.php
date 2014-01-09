@@ -41,7 +41,11 @@ class CacheListener
             return;
         }
 
-        $user        = $this->securityContext->getToken()->getUser();
+        $token = $this->securityContext->getToken();
+        if ($token === null) {
+            return;
+        }
+        $user        = $token->getUser();
         $cacheConfig = $user->getConfigCache();
 
         $cache = $this->defaultCache;
