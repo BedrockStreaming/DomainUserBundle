@@ -39,8 +39,12 @@ class UserAccessListener
         if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
             return;
         }
+        $token = $this->context->getToken();
+        if ($token === null) {
+            return;
+        }
+        $user        = $token->getUser();
         $request     = $event->getRequest();
-        $user        = $this->context->getToken()->getUser();
         $allowConfig = $user->getConfigFirewallAllow();
 
         // 0.
