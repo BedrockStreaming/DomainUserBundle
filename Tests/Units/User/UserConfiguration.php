@@ -44,6 +44,7 @@ class UserConfiguration extends test
                             'myflag' => 3,
                         ),
                     ),
+                    'parameters' => array(),
                 ));
     }
 
@@ -73,6 +74,7 @@ class UserConfiguration extends test
                         )
                     ),
                     'entities' => array(),
+                    'parameters' => array(),
                 ));
     }
 }
