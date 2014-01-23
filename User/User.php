@@ -93,4 +93,9 @@ class User implements UserInterface
     {
         return $this->config['entities'];
     }
+
+    public function getConfigParameters()
+    {
+        return $this->config['parameters'];
+    }
 }
