@@ -81,6 +81,8 @@ cache:
 entities:
     article:
         active: true # Arbitrary flag you can use to filter your entities in your repositories
+parameters:
+    param_name: param_value # Arbitrary parameters
 ```
 
 Edit your `app/config/security.yml`:

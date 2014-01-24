@@ -44,7 +44,9 @@ class UserConfiguration extends test
                             'myflag' => 3,
                         ),
                     ),
-                    'parameters' => array(),
+                    'parameters' => array(
+                        'param_name' => 'param_value',
+                    ),
                 ));
     }
 
