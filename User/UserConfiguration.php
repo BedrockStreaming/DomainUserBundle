@@ -39,7 +39,7 @@ class UserConfiguration implements ConfigurationInterface
                 ->end()
 
                 ->arrayNode('parameters')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                 ->end()
 
                 ->arrayNode('firewall')
