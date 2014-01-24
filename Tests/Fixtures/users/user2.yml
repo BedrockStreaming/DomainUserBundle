@@ -4,3 +4,5 @@ entities:
     article:
         active: true
         myflag: 3
+parameters:
+    param_name: param_value

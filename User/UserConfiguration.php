@@ -38,6 +38,10 @@ class UserConfiguration implements ConfigurationInterface
                     ->end()
                 ->end()
 
+                ->arrayNode('parameters')
+                    ->prototype('scalar')->end()
+                ->end()
+
                 ->arrayNode('firewall')
                     ->addDefaultsIfNotSet()
                     ->children()
