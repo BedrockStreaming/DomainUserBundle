@@ -34,7 +34,13 @@ class Factory implements SecurityFactoryInterface
             ->replaceArgument(0, new Reference($userProvider));
 
         $listenerId = 'security.authentication.listener.m6_web_domain_user.'.$id;
-        $container->setDefinition($listenerId, new DefinitionDecorator('m6_web_domain_user.security.authentication_listener'));
+        $listener = $container->setDefinition($listenerId, new DefinitionDecorator(sprintf('m6_web_domain_user.security.%s_firewall_listener', $config['mode'])));
+        if ($config['mode'] === 'jwt') {
+            if (empty($config['key'])) {
+                throw new \Exception('key is required when using JWT mode');
+            }
+            $listener->replaceArgument(3, $config['key']);
+        }
 
         return array($providerId, $listenerId, $defaultEntryPoint);
     }
@@ -68,5 +74,13 @@ class Factory implements SecurityFactoryInterface
      */
     public function addConfiguration(NodeDefinition $node)
     {
+        $node
+            ->children()
+                ->enumNode('mode')
+                    ->values(['domain', 'jwt'])
+                    ->defaultValue('domain')
+                ->end()
+                ->scalarNode('key')->end()
+            ->end();
     }
 }

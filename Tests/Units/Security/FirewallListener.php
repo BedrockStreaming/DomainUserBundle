@@ -5,7 +5,7 @@ namespace M6Web\Bundle\DomainUserBundle\Tests\Units\Security;
 use M6Web\Bundle\DomainUserBundle\Security\Token;
 use mageekguy\atoum\test;
 
-use M6Web\Bundle\DomainUserBundle\Security\FirewallListener as TestedClass;
+use M6Web\Bundle\DomainUserBundle\Security\DomainFirewallListener as TestedClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;

@@ -10,14 +10,22 @@ services:
         class:  M6Web\Bundle\DomainUserBundle\Security\AuthenticationProvider
         arguments: ["", "@m6web.firewall.provider"]
 
-    m6_web_domain_user.security.authentication_listener:
-        class:  M6Web\Bundle\DomainUserBundle\Security\FirewallListener
+    m6_web_domain_user.security.domain_firewall_listener:
+        class:  M6Web\Bundle\DomainUserBundle\Security\DomainFirewallListener
         arguments:
             - "@security.context"
             - "@security.authentication.manager"
-            - "@router.request_context"
             - "%m6_web_domain_user.default_user%"
+            - "@router.request_context"
             - "%m6_web_domain_user.router_parameter%"
+
+    m6_web_domain_user.security.jwt_firewall_listener:
+        class:  M6Web\Bundle\DomainUserBundle\Security\JwtFirewallListener
+        arguments:
+            - "@security.context"
+            - "@security.authentication.manager"
+            - "%m6_web_domain_user.default_user%"
+            - ""
 
     m6_web_domain_user.user_access_listener:
             class: M6Web\Bundle\DomainUserBundle\EventListener\UserAccessListener
