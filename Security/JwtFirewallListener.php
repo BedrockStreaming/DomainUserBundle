@@ -4,7 +4,7 @@ namespace M6Web\Bundle\DomainUserBundle\Security;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
@@ -33,8 +33,6 @@ class JwtFirewallListener extends BaseFirewallListener
      */
     public function getUsernameFromRequest(Request $request)
     {
-        $username = $this->defaultUsername;
-
         if ($request->headers->has('Authorization')) {
             $auth = explode(' ', $request->headers->get('Authorization'));
             try {
@@ -45,10 +43,11 @@ class JwtFirewallListener extends BaseFirewallListener
 
                 return $payload->sub;
             } catch (\Exception $e) {
-                throw new AuthenticationException($e->getMessage());
+                $this->securityContext->setToken(new Token($this->defaultUsername));
+                throw new AccessDeniedException($e->getMessage());
             }
         }
 
-        return $username;
+        return $this->defaultUsername;
     }
 }
