@@ -17,7 +17,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "m6web/firewall-bundle": "0.3.*"
+        "m6web/firewall-bundle": "0.3.*",
+        "firebase/php-jwt": "dev-master"
     },
     "require-dev": {
         "symfony/symfony": "~2.3",

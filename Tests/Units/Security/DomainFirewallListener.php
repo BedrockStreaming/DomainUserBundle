@@ -5,17 +5,17 @@ namespace M6Web\Bundle\DomainUserBundle\Tests\Units\Security;
 use M6Web\Bundle\DomainUserBundle\Security\Token;
 use mageekguy\atoum\test;
 
-use M6Web\Bundle\DomainUserBundle\Security\FirewallListener as TestedClass;
+use M6Web\Bundle\DomainUserBundle\Security\DomainFirewallListener as TestedClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
- * Class FirewallListener
+ * Class DomainFirewallListener
  *
  * @author Adrien Samson <asamson.externe@m6.fr>
  */
-class FirewallListener extends test
+class DomainFirewallListener extends test
 {
     public function testClass()
     {
@@ -34,7 +34,7 @@ class FirewallListener extends test
         };
         $requestContext  = new \mock\Symfony\Component\Routing\RequestContext();
 
-        $listener = new TestedClass($securityContext, $authManager, $requestContext, 'default', 'client');
+        $listener = new TestedClass($securityContext, $authManager, 'default', $requestContext, 'client');
 
         $this->getMockGenerator()->orphanize('__construct');
         $event = new \mock\Symfony\Component\HttpKernel\Event\GetResponseEvent();
@@ -65,7 +65,7 @@ class FirewallListener extends test
         };
         $requestContext  = new \mock\Symfony\Component\Routing\RequestContext();
 
-        $listener = new TestedClass($securityContext, $authManager, $requestContext, 'default', 'client');
+        $listener = new TestedClass($securityContext, $authManager, 'default', $requestContext, 'client');
 
         $this->getMockGenerator()->orphanize('__construct');
         $event = new \mock\Symfony\Component\HttpKernel\Event\GetResponseEvent();
@@ -96,7 +96,7 @@ class FirewallListener extends test
         };
         $requestContext  = new \mock\Symfony\Component\Routing\RequestContext();
 
-        $listener = new TestedClass($securityContext, $authManager, $requestContext, 'default', 'client');
+        $listener = new TestedClass($securityContext, $authManager, 'default', $requestContext, 'client');
 
         $this->getMockGenerator()->orphanize('__construct');
         $event = new \mock\Symfony\Component\HttpKernel\Event\GetResponseEvent();
@@ -126,7 +126,7 @@ class FirewallListener extends test
         };
         $requestContext  = new \mock\Symfony\Component\Routing\RequestContext();
 
-        $listener = new TestedClass($securityContext, $authManager, $requestContext, 'default', 'client');
+        $listener = new TestedClass($securityContext, $authManager, 'default', $requestContext, 'client');
 
         $this->getMockGenerator()->orphanize('__construct');
         $event = new \mock\Symfony\Component\HttpKernel\Event\GetResponseEvent();
