@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterfac
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Firewall\ListenerInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Class FirewallListener
@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  */
 class FirewallListener implements ListenerInterface
 {
-    protected $securityContext;
+    protected $tokenStorage;
     protected $authenticationManager;
     protected $requestContext;
     protected $defaultUsername;
@@ -27,20 +27,20 @@ class FirewallListener implements ListenerInterface
     /**
      * Constructor
      *
-     * @param SecurityContextInterface       $securityContext
+     * @param TokenStorageInterface          $tokenStorage
      * @param AuthenticationManagerInterface $authenticationManager
      * @param RequestContext                 $requestContext
      * @param string                         $defaultUsername
      * @param string                         $routerParameter
      */
     public function __construct(
-        SecurityContextInterface $securityContext,
+        TokenStorageInterface $tokenStorage,
         AuthenticationManagerInterface $authenticationManager,
         RequestContext $requestContext,
         $defaultUsername,
         $routerParameter)
     {
-        $this->securityContext       = $securityContext;
+        $this->tokenStorage          = $tokenStorage;
         $this->authenticationManager = $authenticationManager;
         $this->requestContext        = $requestContext;
         $this->defaultUsername       = $defaultUsername;
@@ -68,7 +68,7 @@ class FirewallListener implements ListenerInterface
         $token = new Token($username);
         try {
             $authenticatedToken = $this->authenticationManager->authenticate($token);
-            $this->securityContext->setToken($authenticatedToken);
+            $this->tokenStorage->setToken($authenticatedToken);
         } catch (AuthenticationException $e) {
             throw new AccessDeniedException($e->getMessage(), $e);
         }
