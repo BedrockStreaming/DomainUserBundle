@@ -5,8 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Class FirewallListener
@@ -15,16 +14,16 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  */
 class UserAccessListener
 {
-    protected $context;
+    protected $tokenStorage;
 
     /**
      * Constructor
      *
-     * @param SecurityContextInterface $context
+     * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct(SecurityContextInterface $context)
+    public function __construct(TokenStorageInterface $tokenStorage)
     {
-        $this->context = $context;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -39,7 +38,7 @@ class UserAccessListener
         if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
             return;
         }
-        $token = $this->context->getToken();
+        $token = $this->tokenStorage->getToken();
         if ($token === null) {
             return;
         }

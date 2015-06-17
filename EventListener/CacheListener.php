@@ -2,7 +2,7 @@
 
 namespace M6Web\Bundle\DomainUserBundle\EventListener;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Class CacheListener
@@ -12,17 +12,17 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 class CacheListener
 {
     protected $defaultCache;
-    protected $securityContext;
+    protected $tokenStorage;
 
     /**
      * Constructor
      *
-     * @param SecurityContextInterface $securityContext
-     * @param integer                  $defaultCache
+     * @param TokenStorageInterface $tokenStorage
+     * @param integer               $defaultCache
      */
-    public function __construct(SecurityContextInterface $securityContext, $defaultCache)
+    public function __construct(TokenStorageInterface $tokenStorage, $defaultCache)
     {
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
         $this->defaultCache    = $defaultCache;
     }
 
@@ -41,7 +41,7 @@ class CacheListener
             return;
         }
 
-        $token = $this->securityContext->getToken();
+        $token = $this->tokenStorage->getToken();
         if ($token === null) {
             return;
         }

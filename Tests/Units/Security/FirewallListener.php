@@ -24,8 +24,8 @@ class FirewallListener extends test
 
     public function testHandleWithClient()
     {
-        $securityContext = new \mock\Symfony\Component\Security\Core\SecurityContextInterface();
-        $authManager     = new \mock\Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface();
+        $tokenStorage = new \mock\Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface();
+        $authManager  = new \mock\Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface();
         $authManager->getMockController()->authenticate = function (TokenInterface $token) {
             if (in_array($token->getUsername(), ['android', 'default'])) {
                 return new Token($token->getUsername(), ['ROLE_USER']);
@@ -34,7 +34,7 @@ class FirewallListener extends test
         };
         $requestContext  = new \mock\Symfony\Component\Routing\RequestContext();
 
-        $listener = new TestedClass($securityContext, $authManager, $requestContext, 'default', 'client');
+        $listener = new TestedClass($tokenStorage, $authManager, $requestContext, 'default', 'client');
 
         $this->getMockGenerator()->orphanize('__construct');
         $event = new \mock\Symfony\Component\HttpKernel\Event\GetResponseEvent();
@@ -43,7 +43,7 @@ class FirewallListener extends test
         $listener->handle($event);
 
         $this
-            ->mock($securityContext)
+            ->mock($tokenStorage)
                 ->call('setToken')
                     ->withArguments(new Token('android', ['ROLE_USER']))
                     ->once()
@@ -55,7 +55,7 @@ class FirewallListener extends test
 
     public function testHandleWithDefault()
     {
-        $securityContext = new \mock\Symfony\Component\Security\Core\SecurityContextInterface();
+        $tokenStorage = new \mock\Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface();
         $authManager     = new \mock\Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface();
         $authManager->getMockController()->authenticate = function (TokenInterface $token) {
             if (in_array($token->getUsername(), ['android', 'default'])) {
@@ -65,7 +65,7 @@ class FirewallListener extends test
         };
         $requestContext  = new \mock\Symfony\Component\Routing\RequestContext();
 
-        $listener = new TestedClass($securityContext, $authManager, $requestContext, 'default', 'client');
+        $listener = new TestedClass($tokenStorage, $authManager, $requestContext, 'default', 'client');
 
         $this->getMockGenerator()->orphanize('__construct');
         $event = new \mock\Symfony\Component\HttpKernel\Event\GetResponseEvent();
@@ -74,7 +74,7 @@ class FirewallListener extends test
         $listener->handle($event);
 
         $this
-            ->mock($securityContext)
+            ->mock($tokenStorage)
                 ->call('setToken')
                     ->withArguments(new Token('default', ['ROLE_USER']))
                     ->once()
@@ -86,7 +86,7 @@ class FirewallListener extends test
 
     public function testHandleWithoutParam()
     {
-        $securityContext = new \mock\Symfony\Component\Security\Core\SecurityContextInterface();
+        $tokenStorage = new \mock\Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface();
         $authManager     = new \mock\Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface();
         $authManager->getMockController()->authenticate = function (TokenInterface $token) {
             if (in_array($token->getUsername(), ['android', 'default'])) {
@@ -96,7 +96,7 @@ class FirewallListener extends test
         };
         $requestContext  = new \mock\Symfony\Component\Routing\RequestContext();
 
-        $listener = new TestedClass($securityContext, $authManager, $requestContext, 'default', 'client');
+        $listener = new TestedClass($tokenStorage, $authManager, $requestContext, 'default', 'client');
 
         $this->getMockGenerator()->orphanize('__construct');
         $event = new \mock\Symfony\Component\HttpKernel\Event\GetResponseEvent();
@@ -105,7 +105,7 @@ class FirewallListener extends test
         $listener->handle($event);
 
         $this
-            ->mock($securityContext)
+            ->mock($tokenStorage)
                 ->call('setToken')
                     ->withArguments(new Token('default', ['ROLE_USER']))
                     ->once()
@@ -116,7 +116,7 @@ class FirewallListener extends test
 
     public function testHandleWithBadClient()
     {
-        $securityContext = new \mock\Symfony\Component\Security\Core\SecurityContextInterface();
+        $tokenStorage = new \mock\Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface();
         $authManager     = new \mock\Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface();
         $authManager->getMockController()->authenticate = function (TokenInterface $token) {
             if (in_array($token->getUsername(), ['android', 'default'])) {
@@ -126,7 +126,7 @@ class FirewallListener extends test
         };
         $requestContext  = new \mock\Symfony\Component\Routing\RequestContext();
 
-        $listener = new TestedClass($securityContext, $authManager, $requestContext, 'default', 'client');
+        $listener = new TestedClass($tokenStorage, $authManager, $requestContext, 'default', 'client');
 
         $this->getMockGenerator()->orphanize('__construct');
         $event = new \mock\Symfony\Component\HttpKernel\Event\GetResponseEvent();
@@ -135,7 +135,7 @@ class FirewallListener extends test
         $this
             ->exception(function () use ($listener, $event) { $listener->handle($event); })
                 ->isInstanceOf('Symfony\Component\Security\Core\Exception\AccessDeniedException')
-            ->mock($securityContext)
+            ->mock($tokenStorage)
                 ->call('setToken')
                     ->never();
     }
