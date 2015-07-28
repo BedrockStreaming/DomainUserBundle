@@ -134,7 +134,7 @@ class FirewallListener extends test
 
         $this
             ->exception(function () use ($listener, $event) { $listener->handle($event); })
-                ->isInstanceOf('Symfony\Component\Security\Core\Exception\AccessDeniedException')
+                ->isInstanceOf('Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException')
             ->mock($tokenStorage)
                 ->call('setToken')
                     ->never();

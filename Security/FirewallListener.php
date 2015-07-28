@@ -2,11 +2,10 @@
 
 namespace M6Web\Bundle\DomainUserBundle\Security;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -70,7 +69,7 @@ class FirewallListener implements ListenerInterface
             $authenticatedToken = $this->authenticationManager->authenticate($token);
             $this->tokenStorage->setToken($authenticatedToken);
         } catch (AuthenticationException $e) {
-            throw new AccessDeniedException($e->getMessage(), $e);
+            throw new AccessDeniedHttpException($e->getMessage());
         }
     }
 }
