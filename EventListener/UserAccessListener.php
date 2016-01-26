@@ -68,6 +68,11 @@ class UserAccessListener
             $allowed = $allowConfig['routes'][$route];
         }
 
+        // 4. Override if profiler
+        if (preg_match('/^_(wdt|profiler)/', $route)) {
+            $allowed = true;
+        }
+
         if (!$allowed) {
             throw new AccessDeniedHttpException("Access denied");
         }
