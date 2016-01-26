@@ -27,5 +27,6 @@ class M6WebDomainUserExtension extends Extension
         $container->setParameter('m6_web_domain_user.router_parameter', $processedConfig['router_parameter']);
         $container->setParameter('m6_web_domain_user.default_cache', $processedConfig['default_cache']);
         $container->setParameter('m6_web_domain_user.users_dir', $processedConfig['users_dir']);
+        $container->setParameter('m6_web_domain_user.allow_debug_route', $processedConfig['firewall']['allow_debug_route']);
     }
 }

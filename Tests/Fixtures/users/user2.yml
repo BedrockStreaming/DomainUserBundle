@@ -6,3 +6,6 @@ entities:
         myflag: 3
 parameters:
     param_name: param_value
+firewall:
+    allow:
+        allow_debug_route: true

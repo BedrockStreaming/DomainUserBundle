@@ -24,7 +24,11 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('default_user')->isRequired()->end()
             ->scalarNode('default_cache')->isRequired()->end()
             ->scalarNode('router_parameter')->isRequired()->end()
-            ->scalarNode('users_dir')->isRequired()->end();
+            ->scalarNode('users_dir')->isRequired()->end()
+            ->arrayNode('firewall')
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->booleanNode('allow_debug_route')->defaultFalse()->end();
 
         return $treeBuilder;
     }

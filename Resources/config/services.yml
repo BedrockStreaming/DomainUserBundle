@@ -20,13 +20,15 @@ services:
             - "%m6_web_domain_user.router_parameter%"
 
     m6_web_domain_user.user_access_listener:
-            class: M6Web\Bundle\DomainUserBundle\EventListener\UserAccessListener
-            tags:
-              - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority:-255 }
-            arguments: [@security.token_storage]
+        class: M6Web\Bundle\DomainUserBundle\EventListener\UserAccessListener
+        tags:
+          - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority:-255 }
+        arguments:
+            - "@security.context"
+            - "%m6_web_domain_user.allow_debug_route%"
 
     m6_web_domain_user.cache_listener:
-            class: M6Web\Bundle\DomainUserBundle\EventListener\CacheListener
-            tags:
-              - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority:255 }
-            arguments: [@security.token_storage, "%m6_web_domain_user.default_cache%"]
+        class: M6Web\Bundle\DomainUserBundle\EventListener\CacheListener
+        tags:
+          - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority:255 }
+        arguments: [@security.token_storage, "%m6_web_domain_user.default_cache%"]
