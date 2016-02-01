@@ -58,6 +58,7 @@ class UserConfiguration implements ConfigurationInterface
                         ->arrayNode('allow')
                             ->addDefaultsIfNotSet()
                             ->children()
+                                ->booleanNode('allow_debug_route')->defaultFalse()->end()
                                 ->booleanNode('default')->defaultFalse()->end()
                                 ->arrayNode('methods')
                                     ->prototype('boolean')->end()

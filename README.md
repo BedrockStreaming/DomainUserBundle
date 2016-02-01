@@ -1,6 +1,6 @@
 # DomainUserBundle [![Build Status](https://secure.travis-ci.org/M6Web/DomainUserBundle.png?branch=master)](http://travis-ci.org/M6Web/DomainUserBundle)
 
-DomainUserBundle provides user authentication by subdomain.  
+DomainUserBundle provides user authentication by subdomain.
 It allows firewalling, cache customization, route filtering and data filtering by subdomain.
 
 ## Dependency
@@ -54,6 +54,8 @@ m6_web_domain_user:
     router_parameter: client   # Parameter in the host requirement
     default_user:     public   # User when the parameter is not found
     users_dir:        %kernel.root_dir%/config/users # Directory containing the user configs
+    firewall:
+        allow_debug_route: false # Allows or not (default) web debug toolbar routes for the concerned environment
 ```
 
 Add a user `app/config/users/public.yml`:
@@ -73,6 +75,8 @@ firewall:
             article: false # Override by routes configured with "defaults: {resource: article}"
         route:
             post_comment: false # Override by route name
+        allow_debug_route: false # Allows or not (default) web debug toolbar routes for this user
+
 cache:
     defaults: 60 # Override the default cache duration
     routes:
@@ -107,7 +111,7 @@ $ ./vendor/bin/atoum
 
 ## Credits
 
-Developped by the [Cytron Team](http://cytron.fr/) of [M6 Web](http://tech.m6web.fr/).  
+Developped by the [Cytron Team](http://cytron.fr/) of [M6 Web](http://tech.m6web.fr/).
 Tested with [atoum](http://atoum.org).
 
 ## License

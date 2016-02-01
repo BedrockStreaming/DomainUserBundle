@@ -32,6 +32,7 @@ class UserConfiguration extends test
                             'lists' => array(),
                         ),
                         'allow' => array(
+                            'allow_debug_route' => true,
                             'default' => false,
                             'methods' => array(),
                             'resources' => array(),
@@ -69,6 +70,7 @@ class UserConfiguration extends test
                             'lists' => array(),
                         ),
                         'allow' => array(
+                            'allow_debug_route' => false,
                             'default' => false,
                             'methods' => array(),
                             'resources' => array(),

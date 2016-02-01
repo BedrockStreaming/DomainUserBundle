@@ -1,7 +1,7 @@
 <?php
 
 namespace M6Web\Bundle\DomainUserBundle\EventListener;
-use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -15,15 +15,17 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class UserAccessListener
 {
     protected $tokenStorage;
+    protected $allowDebugRoute;
 
     /**
      * Constructor
      *
      * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct(TokenStorageInterface $tokenStorage, $allowDebugRoute)
     {
         $this->tokenStorage = $tokenStorage;
+        $this->allowDebugRoute = $allowDebugRoute;
     }
 
     /**
@@ -66,6 +68,14 @@ class UserAccessListener
         $route = $request->attributes->get('_route');
         if (isset($allowConfig['routes'][$route])) {
             $allowed = $allowConfig['routes'][$route];
+        }
+
+        // 4. check if debug routes are allowed
+        if (
+            preg_match('/^_(wdt|profiler)/', $route) &&
+            ($this->allowDebugRoute || $allowConfig['allow_debug_route'])
+        ) {
+            $allowed = true;
         }
 
         if (!$allowed) {
