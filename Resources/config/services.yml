@@ -24,11 +24,11 @@ services:
         tags:
           - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority:-255 }
         arguments:
-            - "@security.context"
+            - "@security.token_storage"
             - "%m6_web_domain_user.allow_debug_route%"
 
     m6_web_domain_user.cache_listener:
         class: M6Web\Bundle\DomainUserBundle\EventListener\CacheListener
         tags:
           - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority:255 }
-        arguments: [@security.token_storage, "%m6_web_domain_user.default_cache%"]
+        arguments: ["@security.token_storage", "%m6_web_domain_user.default_cache%"]
