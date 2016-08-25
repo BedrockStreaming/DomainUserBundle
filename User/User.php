@@ -98,4 +98,15 @@ class User implements UserInterface
     {
         return $this->config['parameters'];
     }
+
+    /**
+     * @link http://php.net/manual/fr/language.oop5.magic.php#object.set-state
+     * @param array $vars
+     *
+     * @return User
+     */
+    public static function __set_state(array $vars)
+    {
+        return new User($vars['username'], $vars['config']);
+    }
 }

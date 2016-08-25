@@ -1,7 +1,7 @@
 services:
     m6_web_domain_user.user_provider:
         class: M6Web\Bundle\DomainUserBundle\User\UserProvider
-        arguments: ["@m6_web_domain_user.user_provider.yamlparser", "%m6_web_domain_user.users_dir%"]
+        arguments: ["@m6_web_domain_user.user_provider.yamlparser", "%m6_web_domain_user.users_dir%", "%kernel.cache_dir%"]
 
     m6_web_domain_user.user_provider.yamlparser:
         class: Symfony\Component\Yaml\Parser
@@ -32,3 +32,12 @@ services:
         tags:
           - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority:255 }
         arguments: ["@security.token_storage", "%m6_web_domain_user.default_cache%"]
+
+    # config cache warmer
+    m6_web_domain_user.config_cache_warmer:
+        class: M6Web\Bundle\DomainUserBundle\Cache\Warmup
+        calls:
+          - [ "setUserDir", ["%m6_web_domain_user.users_dir%"] ]
+          - [ "setUserProvider", ["@m6_web_domain_user.user_provider"] ]
+        tags:
+          - { name: kernel.cache_warmer, priority: 0 }
