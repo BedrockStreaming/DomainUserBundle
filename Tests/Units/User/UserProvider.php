@@ -24,18 +24,18 @@ class UserProvider extends test
     public function testLoadUserByUsername()
     {
         $parser   = new \Symfony\Component\Yaml\Parser();
-        $provider = new TestedClass($parser, __DIR__.'/../../Fixtures/users/');
+        $provider = new TestedClass($parser, __DIR__.'/../../Fixtures/users/', '/tmp');
 
         $processor = new Processor();
 
         $this
-            ->object($user = $provider->loadUserByUsername('user1'))
+            ->object($user = $provider->getUserByUserName('user1'))
                 ->isInstanceOf('M6Web\Bundle\DomainUserBundle\User\User')
                 ->isEqualTo(new User('user1', $processor->processConfiguration(new UserConf(), [[]])))
-            ->object($user = $provider->loadUserByUsername('user2'))
+            ->object($user = $provider->getUserByUserName('user2'))
                 ->isInstanceOf('M6Web\Bundle\DomainUserBundle\User\User')
                 ->isEqualTo(new User('user2', $processor->processConfiguration(new UserConf(), [$parser->parse(file_get_contents(__DIR__.'/../../Fixtures/users/user2.yml'))])))
-            ->exception(function () use ($provider) { $provider->loadUserByUsername('unknownuser'); })
+            ->exception(function () use ($provider) { $provider->getUserByUserName('unknownuser'); })
                 ->isInstanceOf('Symfony\Component\Security\Core\Exception\UsernameNotFoundException');
     }
 }

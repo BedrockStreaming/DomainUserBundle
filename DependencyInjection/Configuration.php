@@ -28,9 +28,10 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('firewall')
                 ->addDefaultsIfNotSet()
                 ->children()
-                    ->booleanNode('allow_debug_route')->defaultFalse()->end();
-
+                    ->booleanNode('allow_debug_route')->defaultFalse()->end()
+                ->end()
+            ->end()
+            ;
         return $treeBuilder;
     }
-
 }
