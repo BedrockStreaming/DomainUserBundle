@@ -1,6 +1,7 @@
 <?php
 
 namespace M6Web\Bundle\DomainUserBundle\EventListener;
+
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -35,6 +36,10 @@ class CacheListener
      */
     public function onKernelResponse(FilterResponseEvent $event)
     {
+        if (!$event->isMasterRequest()) {
+            return;
+        }
+
         $response = $event->getResponse();
         $request  = $event->getRequest();
         if ($request->getMethod() !== 'GET' || !$response->isSuccessful() || $response->headers->hasCacheControlDirective('max-age')) {
