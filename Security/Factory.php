@@ -4,7 +4,7 @@ namespace M6Web\Bundle\DomainUserBundle\Security;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityFactoryInterface;
 
@@ -30,11 +30,11 @@ class Factory implements SecurityFactoryInterface
     {
         $providerId = 'security.authentication.provider.m6_web_domain_user.'.$id;
         $container
-            ->setDefinition($providerId, new DefinitionDecorator('m6_web_domain_user.security.authentication_provider'))
+            ->setDefinition($providerId, new ChildDefinition('m6_web_domain_user.security.authentication_provider'))
             ->replaceArgument(0, new Reference($userProvider));
 
         $listenerId = 'security.authentication.listener.m6_web_domain_user.'.$id;
-        $container->setDefinition($listenerId, new DefinitionDecorator('m6_web_domain_user.security.authentication_listener'));
+        $container->setDefinition($listenerId, new ChildDefinition('m6_web_domain_user.security.authentication_listener'));
 
         return array($providerId, $listenerId, $defaultEntryPoint);
     }
