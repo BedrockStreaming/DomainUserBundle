@@ -4,8 +4,8 @@
 namespace M6Web\Bundle\DomainUserBundle\Cache;
 
 use M6Web\Bundle\DomainUserBundle\User\UserProvider;
-use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
 
 class Warmup extends CacheWarmer
 {
@@ -32,10 +32,10 @@ class Warmup extends CacheWarmer
         }
 
         $finder = new Finder();
-        $finder->files()->in($this->userdir)->name('*.yml');
+        $finder->files()->in($this->userdir)->name(['*.yml', '*.yaml']);
         $users = [];
         foreach($finder as $file) {
-            $user = basename($file, '.yml');
+            $user = basename($file, pathinfo($file, PATHINFO_EXTENSION));
             $export_user = var_export($this->userProvider->getUserByUserName($user), true);
             $code = <<<EOF
 <?php
