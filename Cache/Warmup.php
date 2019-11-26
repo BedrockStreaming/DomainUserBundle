@@ -34,8 +34,8 @@ class Warmup extends CacheWarmer
         $finder = new Finder();
         $finder->files()->in($this->userdir)->name(['*.yml', '*.yaml']);
         $users = [];
-        foreach($finder as $file) {
-            $user = basename($file, pathinfo($file, PATHINFO_EXTENSION));
+        foreach ($finder as $file) {
+            $user = basename($file, '.'.pathinfo($file, PATHINFO_EXTENSION));
             $export_user = var_export($this->userProvider->getUserByUserName($user), true);
             $code = <<<EOF
 <?php
