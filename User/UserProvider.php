@@ -63,6 +63,9 @@ class UserProvider implements UserProviderInterface
     {
         $file = sprintf('%s/%s.yml', $this->usersDir, $username);
         if (!file_exists($file)) {
+            $file = sprintf('%s/%s.yaml', $this->usersDir, $username);
+        }
+        if (!file_exists($file)) {
             throw new UsernameNotFoundException(sprintf('User "%s" not found', $username));
         }
         $userConfig             = $this->yamlParser->parse(file_get_contents($file)); // parse yaml file

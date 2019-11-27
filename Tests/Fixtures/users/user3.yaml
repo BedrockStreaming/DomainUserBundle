@@ -1,0 +1,11 @@
+cache:
+    default: 300
+entities:
+    article:
+        active: true
+        myflag: 3
+parameters:
+    param_name: param_value
+firewall:
+    allow:
+        allow_debug_route: true

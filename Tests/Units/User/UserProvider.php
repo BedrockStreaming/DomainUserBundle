@@ -35,6 +35,9 @@ class UserProvider extends test
             ->object($user = $provider->getUserByUserName('user2'))
                 ->isInstanceOf('M6Web\Bundle\DomainUserBundle\User\User')
                 ->isEqualTo(new User('user2', $processor->processConfiguration(new UserConf(), [$parser->parse(file_get_contents(__DIR__.'/../../Fixtures/users/user2.yml'))])))
+            ->object($user = $provider->getUserByUserName('user3'))
+                ->isInstanceOf('M6Web\Bundle\DomainUserBundle\User\User')
+                ->isEqualTo(new User('user3', $processor->processConfiguration(new UserConf(), [$parser->parse(file_get_contents(__DIR__.'/../../Fixtures/users/user3.yaml'))])))
             ->exception(function () use ($provider) { $provider->getUserByUserName('unknownuser'); })
                 ->isInstanceOf('Symfony\Component\Security\Core\Exception\UsernameNotFoundException');
     }
